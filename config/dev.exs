@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :cicob, Cicob.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "solfacil",
+  password: "solfacil",
   hostname: "localhost",
   database: "cicob_dev",
   stacktrace: true,
