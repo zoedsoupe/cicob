@@ -1,11 +1,12 @@
 defmodule Cicob.CustomerData.Services.CreateEmail do
-  use Cicob, :service
+  use Cicob, :application_service
 
   alias Cicob.CustomerData.IO.CustomerEmailRepo
   alias Cicob.CustomerData.IO.EmailRepo
   alias Cicob.CustomerData.Models.CustomerEmail
   alias Cicob.CustomerData.Models.Email
 
+  @impl true
   def process(params) do
     with %Email{} = email <- Email.new(params),
          {:ok, new_email} <- EmailRepo.insert(email),

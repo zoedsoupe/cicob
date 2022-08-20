@@ -19,9 +19,19 @@ defmodule Cicob do
     end
   end
 
-  def service do
+  def domain_service do
     quote do
       alias Cicob.Repo
+
+      @behaviour Cicob.Service
+    end
+  end
+
+  def application_service do
+    quote do
+      alias Cicob.Repo
+
+      @behaviour Cicob.Service
     end
   end
 
