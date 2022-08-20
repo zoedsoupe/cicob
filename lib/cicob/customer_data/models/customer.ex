@@ -5,5 +5,6 @@ defmodule Cicob.CustomerData.Models.Customer do
 
   schema "customers" do
     has_many :customer_emails, Models.CustomerEmail
+    has_many :emails, through: [:customer_emails, :emails]
   end
 end

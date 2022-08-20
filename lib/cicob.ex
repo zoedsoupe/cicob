@@ -27,9 +27,22 @@ defmodule Cicob do
 
   def repo do
     quote do
-      alias Cicob.Repo
       import Ecto.Changeset
       import Ecto.Query
+
+      alias Cicob.Repo
+
+      @behaviour Cicob.Repo
+
+      def update(%mod{} = model) do
+        fields = mod.__schema__(:fields)
+        values = Map.take(model, fields)
+
+        mod
+        |> struct(id: model.id)
+        |> cast(values, fields)
+        |> Repo.update()
+      end
     end
   end
 
