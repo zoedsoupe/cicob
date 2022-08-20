@@ -14,6 +14,7 @@ defmodule Cicob.CustomerData.IO.EmailRepo do
   def insert(%Email{} = email) do
     email
     |> cast(%{}, @fields)
+    |> foreign_key_constraint(:customer_id)
     |> Repo.insert()
   end
 end
