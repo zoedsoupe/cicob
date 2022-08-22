@@ -22,8 +22,6 @@ defmodule Cicob do
   def domain_service do
     quote do
       alias Cicob.Repo
-
-      @behaviour Cicob.Service
     end
   end
 

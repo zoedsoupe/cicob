@@ -5,11 +5,13 @@ defmodule Cicob.CustomerData.Services.CreateEmail do
   alias Cicob.CustomerData.IO.EmailRepo
   alias Cicob.CustomerData.Models.CustomerEmail
   alias Cicob.CustomerData.Models.Email
+  alias Cicob.CustomerData.Services.EmailConstraint
 
   @impl true
   def process(params) do
     with %Email{} = email <- Email.new(params),
          {:ok, new_email} <- EmailRepo.insert(email),
+         :ok <- EmailConstraint.validate(params),
          %CustomerEmail{} = customer_email <-
            CustomerEmail.new(email_id: new_email.id, customer_id: email.customer_id),
          {:ok, _customer_email} <- CustomerEmailRepo.insert(customer_email) do
