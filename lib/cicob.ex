@@ -10,12 +10,6 @@ defmodule Cicob do
       def new(fields) do
         struct(@self, fields)
       end
-
-      defimpl Jason.Encoder, for: @self do
-        def encode(struct, opts) do
-          Jason.Encode.map(struct, opts)
-        end
-      end
     end
   end
 

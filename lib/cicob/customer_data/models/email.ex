@@ -3,6 +3,7 @@ defmodule Cicob.CustomerData.Models.Email do
 
   alias Cicob.CustomerData.Models
 
+  @derive {Jason.Encoder, only: [:id, :address, :default, :active]}
   schema "emails" do
     field :address, :string
     field :default, :boolean
