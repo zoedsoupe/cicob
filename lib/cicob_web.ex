@@ -17,10 +17,13 @@ defmodule CicobWeb do
   and import those modules here.
   """
 
+  import Ecto.Changeset, only: [cast: 3, validate_required: 2, apply_action: 2]
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: CicobWeb
 
+      import CicobWeb, only: [normalize: 2]
       import Plug.Conn
       alias CicobWeb.Router.Helpers, as: Routes
     end
@@ -71,5 +74,26 @@ defmodule CicobWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  def normalize(params, input_schema) do
+    types =
+      Enum.reduce(input_schema, %{}, fn
+        {field, [type, _]}, acc ->
+          Map.put(acc, field, type)
+      end)
+
+    required =
+      Enum.reduce(input_schema, [], fn
+        {field, [_type, required: true]}, acc -> [field | acc]
+        _, acc -> acc
+      end)
+
+    fields = Map.keys(types)
+
+    {%{}, types}
+    |> cast(params, fields)
+    |> validate_required(required)
+    |> apply_action(:normalize)
   end
 end

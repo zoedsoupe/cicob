@@ -7,6 +7,10 @@ defmodule CicobWeb.Router do
 
   scope "/api", CicobWeb do
     pipe_through :api
+
+    scope "/customers/:customer_id" do
+      resources "/emails", EmailController, only: [:create]
+    end
   end
 
   if Mix.env() in [:dev, :test] do
